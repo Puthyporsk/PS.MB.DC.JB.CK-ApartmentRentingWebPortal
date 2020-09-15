@@ -1,5 +1,5 @@
 List of dependencies used:
-react-router
+react-router,
 react-router-dom
 
 To start the React server:
