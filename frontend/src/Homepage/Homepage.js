@@ -8,7 +8,6 @@ import {
   NavDropdown,
   Nav,
   Container,
-  Grid,
   Row,
   Col,
 } from "react-bootstrap";
@@ -53,10 +52,11 @@ const Homepage = () => {
       {/* Header Navbar */}
       <Navbar className="header-navbar" expand="lg">
         <Navbar.Brand>PMDJC Apartments</Navbar.Brand>
-        <Button variant="flat" onClick={() => setLogout(true)}>
-          Sign-In
-        </Button>
-        <Button variant="flat">Sign-Out</Button>
+        <div className="signin-signout-button">
+          <Button variant="flat" onClick={() => setLogout(true)}>
+            Sign-In
+          </Button>
+        </div>
       </Navbar>
       {/* Apply Filter Navbar */}
       {/* Minimum and Maximum Price Navbar */}
