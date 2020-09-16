@@ -1,0 +1,22 @@
+.header-navbar {
+  background-color: #b9a3b9;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.left-col {
+  /* background-color: blueviolet; */
+}
+
+.right-col {
+  /* background-color: gold; */
+}
+
+.main-container {
+  padding-left: 0;
+  padding-right: 0;
+}
