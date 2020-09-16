@@ -20,3 +20,23 @@ ul {
   padding-left: 0;
   padding-right: 0;
 }
+
+.price-form {
+  width: 10%;
+}
+
+.price-form-control {
+  margin-top: -10%;
+  size: 10px;
+}
+
+.price-form-group {
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: -250%;
+}
+
+.price-apply-button {
+  margin-top: 15px;
+  margin-left: 45px;
+}

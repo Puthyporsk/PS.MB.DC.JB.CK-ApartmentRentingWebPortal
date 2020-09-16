@@ -65,35 +65,29 @@ const Homepage = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
             <NavDropdown title="Minimum Price" id="basic-nav-dropdown">
-              <Form inline>
-                <FormControl
-                  type="text"
-                  placeholder="Search"
-                  className="mr-sm-2"
-                />
-                <Button variant="outline-success">Apply</Button>
+              <Form inline className="price-form">
+                <Form.Group as={Col} className="price-form-group">
+                  <FormControl size="sm" type="text" placeholder="$ / mo" />
+                  <Button className="price-apply-button">Apply</Button>
+                </Form.Group>
               </Form>
             </NavDropdown>
             <NavDropdown title="Maximum Price" id="basic-nav-dropdown">
-              <Form inline>
-                <FormControl
-                  type="text"
-                  placeholder="Search"
-                  className="mr-sm-2"
-                />
-                <Button variant="outline-success">Apply</Button>
+              <Form inline className="price-form">
+                <Form.Group as={Col} className="price-form-group">
+                  <FormControl size="sm" type="text" placeholder="$ / mo" />
+                  <Button className="price-apply-button">Apply</Button>
+                </Form.Group>
               </Form>
             </NavDropdown>
 
             {/* Location */}
             <NavDropdown title="City" id="basic-nav-dropdown">
-              <Form inline>
-                <FormControl
-                  type="text"
-                  placeholder="Search"
-                  className="mr-sm-2"
-                />
-                <Button variant="outline-success">Search</Button>
+              <Form inline className="price-form">
+                <Form.Group as={Col} className="price-form-group">
+                  <FormControl size="sm" type="text" placeholder="City Name" />
+                  <Button className="price-apply-button">Apply</Button>
+                </Form.Group>
               </Form>
             </NavDropdown>
 
