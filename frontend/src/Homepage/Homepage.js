@@ -35,12 +35,18 @@ const Homepage = () => {
 
   const handleClose = () => setIsSelected(false);
 
+  const loginRedirect = () => {
+    console.log("In login redirect");
+    setLogout(true);
+  };
+
   return (
     <React.Fragment>
       {logout && <Redirect to="/login" />}
       {isSelected && (
         <ApartmentModal
           apartment={selectedApartment}
+          loginRedirect={loginRedirect}
           handleClose={handleClose}
         />
       )}

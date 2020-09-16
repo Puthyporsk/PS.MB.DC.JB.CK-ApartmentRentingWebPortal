@@ -10,7 +10,6 @@ const dummyApartmentData = [
     otherImages: [
       "https://media.istockphoto.com/photos/apartment-buildings-picture-id645199404?k=6&m=645199404&s=612x612&w=0&h=qwPUAqfzu5Bh6T6iPLPxvkEBpDUwoQsd8z6LkHDWprw=",
       "https://media.gettyimages.com/photos/studio-apartment-in-moscowcity-picture-id1045273588?s=612x612",
-      "https://www.mymove.com/wp-content/uploads/2020/07/AdobeStock_187394214.jpg",
     ],
   },
   {
@@ -21,6 +20,10 @@ const dummyApartmentData = [
     city: "seattle",
     bedAmount: 2,
     bathAmount: 2,
+    otherImages: [
+      "https://www.mymove.com/wp-content/uploads/2020/07/AdobeStock_187394214.jpg",
+      "https://media.gettyimages.com/photos/studio-apartment-in-moscowcity-picture-id1045273588?s=612x612",
+    ],
   },
   {
     id: 3,
@@ -30,6 +33,10 @@ const dummyApartmentData = [
     city: "spokane",
     bedAmount: 5,
     bathAmount: 3,
+    otherImages: [
+      "https://media.istockphoto.com/photos/apartment-buildings-picture-id645199404?k=6&m=645199404&s=612x612&w=0&h=qwPUAqfzu5Bh6T6iPLPxvkEBpDUwoQsd8z6LkHDWprw=",
+      "https://www.mymove.com/wp-content/uploads/2020/07/AdobeStock_187394214.jpg",
+    ],
   },
   {
     id: 4,
@@ -53,6 +60,10 @@ const dummyApartmentData = [
     city: "seattle",
     bedAmount: 2,
     bathAmount: 2,
+    otherImages: [
+      "https://www.mymove.com/wp-content/uploads/2020/07/AdobeStock_187394214.jpg",
+      "https://media.gettyimages.com/photos/studio-apartment-in-moscowcity-picture-id1045273588?s=612x612",
+    ],
   },
   {
     id: 6,
@@ -62,6 +73,10 @@ const dummyApartmentData = [
     city: "spokane",
     bedAmount: 5,
     bathAmount: 3,
+    otherImages: [
+      "https://media.istockphoto.com/photos/apartment-buildings-picture-id645199404?k=6&m=645199404&s=612x612&w=0&h=qwPUAqfzu5Bh6T6iPLPxvkEBpDUwoQsd8z6LkHDWprw=",
+      "https://www.mymove.com/wp-content/uploads/2020/07/AdobeStock_187394214.jpg",
+    ],
   },
   {
     id: 7,
@@ -85,6 +100,10 @@ const dummyApartmentData = [
     city: "seattle",
     bedAmount: 2,
     bathAmount: 2,
+    otherImages: [
+      "https://media.istockphoto.com/photos/apartment-buildings-picture-id645199404?k=6&m=645199404&s=612x612&w=0&h=qwPUAqfzu5Bh6T6iPLPxvkEBpDUwoQsd8z6LkHDWprw=",
+      "https://media.gettyimages.com/photos/studio-apartment-in-moscowcity-picture-id1045273588?s=612x612",
+    ],
   },
   {
     id: 9,
@@ -94,6 +113,11 @@ const dummyApartmentData = [
     city: "spokane",
     bedAmount: 5,
     bathAmount: 3,
+    otherImages: [
+      "https://media.istockphoto.com/photos/apartment-buildings-picture-id645199404?k=6&m=645199404&s=612x612&w=0&h=qwPUAqfzu5Bh6T6iPLPxvkEBpDUwoQsd8z6LkHDWprw=",
+      "https://media.gettyimages.com/photos/studio-apartment-in-moscowcity-picture-id1045273588?s=612x612",
+      "https://www.mymove.com/wp-content/uploads/2020/07/AdobeStock_187394214.jpg",
+    ],
   },
   {
     id: 10,
@@ -117,6 +141,10 @@ const dummyApartmentData = [
     city: "seattle",
     bedAmount: 2,
     bathAmount: 2,
+    otherImages: [
+      "https://media.istockphoto.com/photos/apartment-buildings-picture-id645199404?k=6&m=645199404&s=612x612&w=0&h=qwPUAqfzu5Bh6T6iPLPxvkEBpDUwoQsd8z6LkHDWprw=",
+      "https://www.mymove.com/wp-content/uploads/2020/07/AdobeStock_187394214.jpg",
+    ],
   },
   {
     id: 12,
@@ -126,6 +154,10 @@ const dummyApartmentData = [
     city: "spokane",
     bedAmount: 5,
     bathAmount: 3,
+    otherImages: [
+      "https://media.istockphoto.com/photos/apartment-buildings-picture-id645199404?k=6&m=645199404&s=612x612&w=0&h=qwPUAqfzu5Bh6T6iPLPxvkEBpDUwoQsd8z6LkHDWprw=",
+      "https://www.mymove.com/wp-content/uploads/2020/07/AdobeStock_187394214.jpg",
+    ],
   },
 ];
 
