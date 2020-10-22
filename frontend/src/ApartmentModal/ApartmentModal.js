@@ -3,6 +3,10 @@ import { Modal, Button, Container, Row, Col } from "react-bootstrap";
 import "./ApartmentModal.css";
 
 const ApartmentModal = (props) => {
+  const handleSave = () => {
+    console.log("Handling save");
+  };
+
   return (
     <Modal
       show={true}
@@ -18,7 +22,10 @@ const ApartmentModal = (props) => {
           <Button className="button" onClick={props.loginRedirect}>
             Forum
           </Button>
-          <Button className="button" onClick={props.loginRedirect}>
+          <Button
+            className="button"
+            onClick={props.isLoggedIn ? handleSave : props.loginRedirect}
+          >
             Save
           </Button>
         </Modal.Title>

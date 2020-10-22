@@ -50,4 +50,27 @@ const signup = async (req, res, next) => {
   res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  let user;
+  try {
+    user = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError("A user with that email doesn't exist", 500);
+    return next(error);
+  }
+
+  if (!user || user.password !== password) {
+    const error = new HttpError(
+      "Invalid login credentials, please try again",
+      401
+    );
+    return next(error);
+  }
+
+  res.json({ user: user.toObject({ getters: true }) });
+};
+
 exports.signup = signup;
+exports.login = login;

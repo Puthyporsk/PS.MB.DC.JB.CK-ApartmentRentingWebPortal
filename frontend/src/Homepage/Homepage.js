@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router";
 import {
   Navbar,
@@ -17,10 +17,18 @@ import dummyApartmentData from "../dummydata";
 import ApartmentThumbnail from "../ApartmentThumbnail/ApartmentThumbnail";
 import ApartmentModal from "../ApartmentModal/ApartmentModal";
 
-const Homepage = () => {
+const Homepage = (props) => {
   const [logout, setLogout] = useState(false);
   const [selectedApartment, setSelectedApartment] = useState();
   const [isSelected, setIsSelected] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    console.log(props.userInfo);
+    if (props.userInfo != null) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const expandInfo = (id) => {
     console.log("in here");
@@ -47,15 +55,22 @@ const Homepage = () => {
           apartment={selectedApartment}
           loginRedirect={loginRedirect}
           handleClose={handleClose}
+          isLoggedIn={isLoggedIn}
         />
       )}
       {/* Header Navbar */}
       <Navbar className="header-navbar" expand="lg">
         <Navbar.Brand>PMDJC Apartments</Navbar.Brand>
         <div className="signin-signout-button">
-          <Button variant="flat" onClick={() => setLogout(true)}>
-            Sign-In
-          </Button>
+          {isLoggedIn ? (
+            <Button variant="flat" onClick={() => setLogout(true)}>
+              Sign-Out
+            </Button>
+          ) : (
+            <Button variant="flat" onClick={() => setLogout(true)}>
+              Sign-In
+            </Button>
+          )}
         </div>
       </Navbar>
       {/* Apply Filter Navbar */}
