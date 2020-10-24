@@ -13,7 +13,6 @@ import {
 } from "react-bootstrap";
 import "./Homepage.css";
 
-import dummyApartmentData from "../dummydata";
 import ApartmentThumbnail from "../ApartmentThumbnail/ApartmentThumbnail";
 import ApartmentModal from "../ApartmentModal/ApartmentModal";
 
@@ -23,6 +22,8 @@ const Homepage = (props) => {
   const [isSelected, setIsSelected] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const [apartments, setApartments] = useState([]);
+
   useEffect(() => {
     console.log(props.userInfo);
     if (props.userInfo != null) {
@@ -30,14 +31,38 @@ const Homepage = (props) => {
     }
   }, []);
 
-  const expandInfo = (id) => {
-    console.log("in here");
-    setIsSelected(true);
-    dummyApartmentData.map((apartment) => {
-      if (apartment.id === id) {
-        setSelectedApartment(apartment);
+  useEffect(() => {
+    const getApartmentByID = async () => {
+      const response = await fetch(
+        "http://localhost:5000/api/apartments/getAll"
+      );
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
       }
-    });
+      console.log("responseData: ", responseData);
+      setApartments(responseData.apartments);
+    };
+
+    getApartmentByID();
+  }, []);
+
+  const expandInfo = async (id) => {
+    console.log("id:", id);
+    const selectedApartmentResponse = await fetch(
+      `http://localhost:5000/api/apartments/getByID/${id}`
+    );
+    const selectedApartmentData = await selectedApartmentResponse.json();
+
+    if (!selectedApartmentResponse.ok) {
+      throw new Error(selectedApartmentData.message);
+    }
+
+    console.log(selectedApartmentData);
+    setSelectedApartment(selectedApartmentData.apartment);
+
+    setIsSelected(true);
   };
 
   const handleClose = () => setIsSelected(false);
@@ -52,6 +77,7 @@ const Homepage = (props) => {
       {logout && <Redirect to="/login" />}
       {isSelected && (
         <ApartmentModal
+          userInfo={props.userInfo}
           apartment={selectedApartment}
           loginRedirect={loginRedirect}
           handleClose={handleClose}
@@ -125,16 +151,17 @@ const Homepage = (props) => {
         <Row noGutters>
           <Col>
             <ul>
-              {dummyApartmentData.map((apartment) => (
-                <div key={apartment.id}>
+              {apartments.map((apartment) => (
+                <div key={apartment._id}>
                   <ApartmentThumbnail
                     expandInfo={expandInfo}
-                    id={apartment.id}
-                    image={apartment.image}
+                    id={apartment._id}
+                    image={apartment.mainImage}
                     price={apartment.price}
                     bathAmount={apartment.bathAmount}
                     bedAmount={apartment.bedAmount}
                     city={apartment.city}
+                    sqft={apartment.sqft}
                   />
                 </div>
               ))}

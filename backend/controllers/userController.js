@@ -72,5 +72,36 @@ const login = async (req, res, next) => {
   res.json({ user: user.toObject({ getters: true }) });
 };
 
+const saveApartment = async (req, res, next) => {
+  const { uid, aid } = req.body;
+
+  let existingUser;
+  try {
+    existingUser = await User.findById(uid);
+  } catch (err) {
+    const error = new HttpError(
+      "An error ocurred with trying to find the user",
+      500
+    );
+    return next(error);
+  }
+
+  if (!existingUser) {
+    const error = new HttpError("A user with this ID doesn't exist", 500);
+    return next(error);
+  }
+
+  try {
+    await existingUser.saved_apartments.push(aid);
+    await existingUser.save();
+  } catch (err) {
+    const error = new HttpError("The apartment ID was unable to be added", 500);
+    return next(error);
+  }
+
+  res.status(201).json({ user: existingUser });
+};
+
+exports.saveApartment = saveApartment;
 exports.signup = signup;
 exports.login = login;

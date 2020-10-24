@@ -13,6 +13,7 @@ const ApartmentThumbnail = (props) => {
         <Card.Img className="apartment-image" variant="top" src={props.image} />
         <Card.Body>
           <Card.Title>${props.price} /mo</Card.Title>
+          <Card.Text>{props.sqft} sqft</Card.Text>
           <Card.Text>
             {props.bathAmount} beds | {props.bedAmount} baths
           </Card.Text>

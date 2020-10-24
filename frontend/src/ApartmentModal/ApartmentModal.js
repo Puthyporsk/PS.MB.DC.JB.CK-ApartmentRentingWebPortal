@@ -3,8 +3,39 @@ import { Modal, Button, Container, Row, Col } from "react-bootstrap";
 import "./ApartmentModal.css";
 
 const ApartmentModal = (props) => {
-  const handleSave = () => {
+  const handleSave = async () => {
     console.log("Handling save");
+    console.log("userInfo: ", props.userInfo);
+    console.log("apartmentInfo: ", props.apartment);
+
+    {
+      /*TODO: Add all apartment info instead of apartment id
+             so in the saved apartment tab, the apartments can be
+             immediately rendered, instead of making a request for
+             each one
+    */
+    }
+    const userResponse = await fetch(
+      "http://localhost:5000/api/users/saveApartment",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: props.userInfo._id,
+          aid: props.apartment._id,
+        }),
+      }
+    );
+
+    const userData = await userResponse.json();
+
+    if (!userResponse.ok) {
+      throw new Error(userData.message);
+    }
+
+    console.log(userData);
   };
 
   return (
@@ -44,9 +75,7 @@ const ApartmentModal = (props) => {
           </Row>
           <Row>
             {props.apartment.otherImages.map((image) => {
-              return (
-                <img key={props.apartment.id} src={image} className="image" />
-              );
+              return <img key={image} src={image} className="image" />;
             })}
           </Row>
         </Container>

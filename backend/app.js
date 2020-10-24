@@ -2,7 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+
+const HttpError = require("./models/HttpError");
+
 const userRoutes = require("./routes/userRoutes");
+const apartmentRoutes = require("./routes/apartmentRoutes");
 
 const app = express();
 
@@ -14,6 +18,7 @@ app.use(cors());
 
 //user: Drew password: bella
 app.use("/api/users", userRoutes);
+app.use("/api/apartments", apartmentRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Couldn't find this route", 404);
