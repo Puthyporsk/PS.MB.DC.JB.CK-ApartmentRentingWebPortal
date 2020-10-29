@@ -1,6 +1,7 @@
 const HttpError = require("../models/HttpError");
 const { validationResult } = require("express-validator");
 const User = require("../models/User");
+const Apartment = require("../models/Apartment");
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -91,11 +92,48 @@ const saveApartment = async (req, res, next) => {
     return next(error);
   }
 
+  let apartment;
   try {
-    await existingUser.saved_apartments.push(aid);
+    apartment = await Apartment.findById(aid);
+  } catch (err) {
+    const error = new HttpError(
+      "An error ocurred with trying to find the apartment",
+      500
+    );
+    return next(error);
+  }
+
+  if (!apartment) {
+    const error = new HttpError(
+      "An error ocurred with trying to find the apartment",
+      500
+    );
+    return next(error);
+  }
+
+  let duplicate = false;
+  // Check if user already has apartment saved
+  existingUser.savedApartments.map((a) => {
+    if (String(a._id) === String(apartment._id)) {
+      duplicate = true;
+    }
+  });
+
+  if (duplicate) {
+    const error = new HttpError(
+      "This apartment already exists in the users list",
+      500
+    );
+    return next(error);
+  }
+
+  const apartmentObject = apartment.toObject();
+
+  try {
+    await existingUser.savedApartments.push(apartmentObject);
     await existingUser.save();
   } catch (err) {
-    const error = new HttpError("The apartment ID was unable to be added", 500);
+    const error = new HttpError("The apartment was unable to be added", 500);
     return next(error);
   }
 

@@ -32,7 +32,7 @@ const ApartmentModal = (props) => {
     const userData = await userResponse.json();
 
     if (!userResponse.ok) {
-      throw new Error(userData.message);
+      console.log(userData.message);
     }
 
     console.log(userData);
