@@ -1,7 +1,9 @@
 const userController = require("../controllers/userController");
+const Apartment = require("../models/Apartment");
 const User = require("../models/User");
 
 jest.mock("../models/User");
+jest.mock("../models/Apartment");
 
 describe("Testing usercontroller signup", () => {
    
@@ -171,4 +173,142 @@ describe("Testing userController login", () => {
     //     expect(next).toHaveBeenCalledWith(error);
     // });
 
+});
+
+describe("Testing userController saveApartment", () => {
+
+    const mockRequest = () => {
+        return {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              uid: "123",
+              aid: "456",
+            }),
+          };
+    };
+
+    const mockResponse = () =>{
+        const res = {};
+        res.status = jest.fn().mockReturnValue(res);
+        res.json = jest.fn().mockReturnValue(res);
+        return res;
+    }
+
+    // existing user (user with no saved apartments)
+    // {
+    // savedApartments: [],
+    // _id: 5f9c59c255618d1f0075c55c,
+    // name: 'Jason',
+    // email: 'jason@email.com',
+    // password: 'password',
+    // __v: 0
+    // }
+
+    // existing user (user with 1 saved apartments)
+    // {
+    // savedApartments: [
+    //     {
+    //     otherImages: [Array],
+    //     _id: 5f947a70f0a2ce323847eb00,
+    //     mainImage: 'https://photos.zillowstatic.com/fp/2585250d1fd67ba8b8ece3a1d868db9f-cc_ft_960.jpg',
+    //     price: 1025,
+    //     city: 'Spokane',
+    //     sqft: 850,
+    //     bedAmount: 2,
+    //     bathAmount: 1,
+    //     __v: 0
+    //     }
+    // ],
+    // _id: 5f9c59c255618d1f0075c55c,
+    // name: 'Jason',
+    // email: 'jason@email.com',
+    // password: 'password',
+    // __v: 1
+    // }
+
+    // existing user (user with 2 saved apartments)
+    // {
+    // savedApartments: [
+    //     {
+    //     otherImages: [Array],
+    //     _id: 5f947a70f0a2ce323847eb00,
+    //     mainImage: 'https://photos.zillowstatic.com/fp/2585250d1fd67ba8b8ece3a1d868db9f-cc_ft_960.jpg',
+    //     price: 1025,
+    //     city: 'Spokane',
+    //     sqft: 850,
+    //     bedAmount: 2,
+    //     bathAmount: 1,
+    //     __v: 0
+    //     },
+    //     {
+    //     otherImages: [Array],
+    //     _id: 5f947b3df0a2ce323847eb01,
+    //     mainImage: 'https://photos.zillowstatic.com/fp/1e8d7634b79ce6ba59c6aa8ed25c1c90-cc_ft_960.jpg',
+    //     price: 2000,
+    //     city: 'Pullman',
+    //     sqft: 2500,
+    //     bedAmount: 3,
+    //     bathAmount: 3,
+    //     __v: 0
+    //     }
+    // ],
+    // _id: 5f9c59c255618d1f0075c55c,
+    // name: 'Jason',
+    // email: 'jason@email.com',
+    // password: 'password',
+    // __v: 2
+    // }
+
+    //apartment listing
+    // {
+    //     otherImages: [
+    //       'https://photos.zillowstatic.com/fp/11711826c358d08a27ed98f45a1b8326-cc_ft_576.jpg',
+    //       'https://photos.zillowstatic.com/fp/f574316d05fe6ffa038266ec63204653-cc_ft_576.jpg',
+    //       'https://photos.zillowstatic.com/fp/643544ff6a45695042de8ec85ae41cbd-cc_ft_576.jpg'
+    //     ],
+    //     _id: 5f947b3df0a2ce323847eb01,
+    //     mainImage: 'https://photos.zillowstatic.com/fp/1e8d7634b79ce6ba59c6aa8ed25c1c90-cc_ft_960.jpg',
+    //     price: 2000,
+    //     city: 'Pullman',
+    //     sqft: 2500,
+    //     bedAmount: 3,
+    //     bathAmount: 3,
+    //     __v: 0
+    //   }
+
+    test("successful add", async() => {
+        const spy = jest.spyOn(userController, "saveApartment");
+        User.findById.mockResolvedValue({
+            savedApartments: [],
+            _id: '5f9c59c255618d1f0075c55c',
+            name: 'Jason',
+            email: 'jason@email.com',
+            password: 'password',
+            __v: 0
+            });
+        Apartment.findById.mockResolvedValue({
+            otherImages: [],
+            _id: '5f947b3df0a2ce323847eb01',
+            mainImage: 'https://photos.zillowstatic.com/fp/1e8d7634b79ce6ba59c6aa8ed25c1c90-cc_ft_960.jpg',
+            price: 2000,
+            city: 'Pullman',
+            sqft: 2500,
+            bedAmount: 3,
+            bathAmount: 3,
+            __v: 0
+          });
+        
+        Apartment.toObject.mockImplementation((x) => {
+            return x;
+        });
+
+        const req = mockRequest();
+        const res = mockResponse();
+        const next = jest.fn();
+        const output = await spy(req, res, next);
+        expect(res.status).toHaveBeenCalledWith(201);
+    });
 });

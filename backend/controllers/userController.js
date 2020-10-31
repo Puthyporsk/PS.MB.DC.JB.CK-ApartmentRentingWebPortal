@@ -111,7 +111,12 @@ const saveApartment = async (req, res, next) => {
     return next(error);
   }
 
+  console.log("apartment");
+  console.log(apartment);
   let duplicate = false;
+  console.log("existing user");
+  console.log(existingUser);
+  console.log(existingUser.savedApartments);
   // Check if user already has apartment saved
   existingUser.savedApartments.map((a) => {
     if (String(a._id) === String(apartment._id)) {
@@ -128,7 +133,8 @@ const saveApartment = async (req, res, next) => {
   }
 
   const apartmentObject = apartment.toObject();
-
+  console.log('apartmentObject');
+  console.log(apartmentObject);
   try {
     await existingUser.savedApartments.push(apartmentObject);
     await existingUser.save();
