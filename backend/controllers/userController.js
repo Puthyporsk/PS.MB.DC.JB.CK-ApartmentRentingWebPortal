@@ -174,8 +174,44 @@ const getUserApartments = async (req, res, next) => {
   res.status(201).json({savedApartments: savedApartments});
 }
 
+const deleteUserApartment = async (req, res, next) => {
+  const {userID, apartmentID} = req.body;
+
+  let user;
+  try {
+    user = await User.findById(userID);
+  } catch (err) {
+    const error = new HttpError(
+      "An error occurred finding the user",
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError("A user with this ID doesn't exist", 500);
+    return next(error);
+  }
+
+  let newSavedApartments
+  try {
+    newSavedApartments = user.savedApartments.filter((apartment) => 
+      apartment._id.toString() != apartmentID)
+    console.log(newSavedApartments)
+  } catch (err) {
+    const error = new HttpError("Error deleting the apartment", 500);
+    return next(error);
+  }
+
+  user.savedApartments = newSavedApartments;
+  user.save();
+
+  res.status(201).json({savedApartments: user.savedApartments});
+}
+
 exports.saveApartment = saveApartment;
 exports.getUserApartments = getUserApartments;
+exports.deleteUserApartment = deleteUserApartment;
 
 exports.signup = signup;
 exports.login = login;
