@@ -8,6 +8,7 @@ import {
 
 import Homepage from "./Homepage/Homepage";
 import Login from "./Login/Login";
+import SavedApartments from "./SavedApartments/SavedApartments";
 import "./App.css";
 
 const App = () => {
@@ -27,6 +28,9 @@ const App = () => {
           </Route>
           <Route path="/homepage" exact>
             <Homepage userInfo={userInfo} />
+          </Route>
+          <Route path="/savedApartments" exact>
+            <SavedApartments userInfo={userInfo} />
           </Route>
           <Redirect to="/homepage" />
         </Switch>

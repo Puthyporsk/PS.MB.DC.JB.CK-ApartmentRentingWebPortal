@@ -2,6 +2,7 @@ const HttpError = require("../models/HttpError");
 const { validationResult } = require("express-validator");
 const User = require("../models/User");
 const Apartment = require("../models/Apartment");
+const e = require("express");
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -140,6 +141,41 @@ const saveApartment = async (req, res, next) => {
   res.status(201).json({ user: existingUser });
 };
 
+const getUserApartments = async (req, res, next) => {
+  const { userID } = req.body;
+
+  let user;
+  try {
+    user = await User.findById(userID);
+  } catch (err) {
+    const error = new HttpError(
+      "An error occurred finding the user",
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError("A user with this ID doesn't exist", 500);
+    return next(error);
+  }
+
+  let savedApartments;
+  try {
+    savedApartments = user.savedApartments
+  } catch (err) {
+    const error = new HttpError(
+      "An error occurred finding the user's saved apartments", 
+      500
+    );
+    return next(error);
+  }
+
+  res.status(201).json({savedApartments: savedApartments});
+}
+
 exports.saveApartment = saveApartment;
+exports.getUserApartments = getUserApartments;
+
 exports.signup = signup;
 exports.login = login;

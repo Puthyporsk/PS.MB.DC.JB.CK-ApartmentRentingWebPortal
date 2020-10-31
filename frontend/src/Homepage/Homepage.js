@@ -15,6 +15,7 @@ import "./Homepage.css";
 
 import ApartmentThumbnail from "../ApartmentThumbnail/ApartmentThumbnail";
 import ApartmentModal from "../ApartmentModal/ApartmentModal";
+import { BookmarkStar } from "react-bootstrap-icons";
 
 const Homepage = (props) => {
   const [logout, setLogout] = useState(false);
@@ -22,8 +23,12 @@ const Homepage = (props) => {
   const [isSelected, setIsSelected] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Stores if the user wants to redirect to the saved apartments page
+  const [toSavedApartments, setToSavedApartments] = useState(false);
+
   const [apartments, setApartments] = useState([]);
 
+  // If user is logged in, get the user's  saved apartments and setLoggedIn to true
   useEffect(() => {
     console.log(props.userInfo);
     if (props.userInfo != null) {
@@ -32,7 +37,7 @@ const Homepage = (props) => {
   }, []);
 
   useEffect(() => {
-    const getApartmentByID = async () => {
+    const getAllApartments = async () => {
       const response = await fetch(
         "http://localhost:5000/api/apartments/getAll"
       );
@@ -45,7 +50,7 @@ const Homepage = (props) => {
       setApartments(responseData.apartments);
     };
 
-    getApartmentByID();
+    getAllApartments();
   }, []);
 
   const expandInfo = async (id) => {
@@ -72,9 +77,15 @@ const Homepage = (props) => {
     setLogout(true);
   };
 
+  const redirectSavedApartments = () => {
+    console.log("Redirecting to saved apartments");
+
+  }
+
   return (
     <React.Fragment>
       {logout && <Redirect to="/login" />}
+      {toSavedApartments && <Redirect to="/savedApartments"/>}
       {isSelected && (
         <ApartmentModal
           userInfo={props.userInfo}
@@ -87,6 +98,9 @@ const Homepage = (props) => {
       {/* Header Navbar */}
       <Navbar className="header-navbar" expand="lg">
         <Navbar.Brand>PMDJC Apartments</Navbar.Brand>
+        <div>
+          <Button onClick={() => isLoggedIn ? setToSavedApartments(true) : setLogout(true)} className="bookmark-button"><BookmarkStar /></Button>
+        </div>
         <div className="signin-signout-button">
           {isLoggedIn ? (
             <Button variant="flat" onClick={() => setLogout(true)}>
