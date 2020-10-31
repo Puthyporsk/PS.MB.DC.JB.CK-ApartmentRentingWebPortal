@@ -155,13 +155,7 @@ const Homepage = (props) => {
                 <div key={apartment._id}>
                   <ApartmentThumbnail
                     expandInfo={expandInfo}
-                    id={apartment._id}
-                    image={apartment.mainImage}
-                    price={apartment.price}
-                    bathAmount={apartment.bathAmount}
-                    bedAmount={apartment.bedAmount}
-                    city={apartment.city}
-                    sqft={apartment.sqft}
+                    apartment={apartment}
                   />
                 </div>
               ))}

@@ -8,13 +8,6 @@ const ApartmentModal = (props) => {
     console.log("userInfo: ", props.userInfo);
     console.log("apartmentInfo: ", props.apartment);
 
-    {
-      /*TODO: Add all apartment info instead of apartment id
-             so in the saved apartment tab, the apartments can be
-             immediately rendered, instead of making a request for
-             each one
-    */
-    }
     const userResponse = await fetch(
       "http://localhost:5000/api/users/saveApartment",
       {
