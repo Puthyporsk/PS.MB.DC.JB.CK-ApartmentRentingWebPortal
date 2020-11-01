@@ -58,20 +58,24 @@ const login = async (req, res, next) => {
   let user;
   try {
     user = await User.findOne({ email: email });
-  } catch (err) {
-    const error = new HttpError("A user with that email doesn't exist", 500);
+    if (user || email !== "") {
+      if (user.password === password) {
+        res.json({ user: user.toObject({ getters: true }) });
+      } else {
+        const error = new HttpError(
+        "Password is incorrect, please try again.",
+        401
+        );
+        return next(error);
+      }
+    } else {
+      const error = new HttpError("Invalid login credentials, please try again.", 500);
+      return next(error);
+    }
+  } catch (err) { //userId not found in DB
+    const error = new HttpError("A user with that email doesn't exist.", 500);
     return next(error);
   }
-
-  if (!user || user.password !== password) {
-    const error = new HttpError(
-      "Invalid login credentials, please try again",
-      401
-    );
-    return next(error);
-  }
-
-  res.json({ user: user.toObject({ getters: true }) });
 };
 
 const saveApartment = async (req, res, next) => {

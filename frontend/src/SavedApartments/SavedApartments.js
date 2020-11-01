@@ -48,37 +48,38 @@ const SavedApartments = (props) => {
         )
     } else {
     return (
-        <div>
-            {toHome && <Redirect to="/home"/>}
+      <div>
+        {toHome && <Redirect to="/home"/>}
         <Navbar className="header-navbar" expand="lg">
             <Navbar.Brand>Saved Apartments</Navbar.Brand>
             <Button onClick={() => setToHome(true)}>Back</Button>
         </Navbar>    
         <Container fluid={true}>
-        <Row noGutters>
-          <Col>
-            <ul>
-              {savedApartments.map((apartment) => (
-                <Card
-                key={apartment._id}
-                style={{ width: "30rem" }}
-              >
-                <Card.Img className="apartment-image" variant="top" src={apartment.mainImage} />
-                <Card.Body>
-                  <Card.Title>${apartment.price} /mo</Card.Title>
-                  <Card.Text>{apartment.sqft} sqft</Card.Text>
-                  <Card.Text>
-                    {apartment.bathAmount} beds | {apartment.bedAmount} baths
-                  </Card.Text>
-                </Card.Body>
-                <Card.Footer>{apartment.city}</Card.Footer>
-              </Card>
-              ))}
-            </ul>
-          </Col>
-        </Row>
-      </Container>
-        </div>
+          <Row noGutters>
+          {savedApartments.map((apartment) => (
+            <Col>
+              <ul>            
+                  <Card
+                  key={apartment._id}
+                  style={{ width: "30rem" }}
+                >
+                  <Card.Img className="apartment-image" variant="top" src={apartment.mainImage} />
+                  <Card.Body>
+                    <Card.Title>${apartment.price} /mo</Card.Title>
+                    <Card.Text>{apartment.sqft} sqft</Card.Text>
+                    <Card.Text>
+                      {apartment.bathAmount} beds | {apartment.bedAmount} baths
+                    </Card.Text>
+                  </Card.Body>
+                  <Card.Footer>{apartment.city}</Card.Footer>
+                </Card>
+                
+              </ul>
+            </Col>
+          ))}
+          </Row>
+        </Container>
+      </div>
     )
     }
 }

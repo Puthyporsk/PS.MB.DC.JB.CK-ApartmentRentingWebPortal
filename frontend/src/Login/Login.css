@@ -35,6 +35,14 @@
     margin-bottom: -30px;
   }
 
+  /* .show {
+    display: 'block'
+  }
+
+  .hide {
+    display: 'none'
+  } */
+
   /* Modal css that will be put into a new component later */
   .modal-footer {
     text-align: center;

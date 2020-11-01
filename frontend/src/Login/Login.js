@@ -7,6 +7,10 @@ import "./Login.css";
 import Logo from "./logo.png";
 
 const Login = (props) => {
+
+  const [logInErr, setLogInErr] = useState(false);
+  const [logInErrMsg, setlogInErrMsg] = useState("something");
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
 
@@ -43,6 +47,8 @@ const Login = (props) => {
       props.getUserInfo(responseData.user);
       setLoggedIn(true);
     } catch (err) {
+      setLogInErr(true);
+      setlogInErrMsg(err.message);
       console.log(err.message || "Something went wrong, please try again");
     }
   };
@@ -83,8 +89,8 @@ const Login = (props) => {
       <div>
         <img src={Logo} alt="apartment-logo" className="logo" />
       </div>
-
       <form>
+      {logInErr ? <p style={{textAlign: "center", backgroundColor: 'lightcoral'}}>{logInErrMsg}</p>: null}
         <div className="input-wrapper">
           <div className="email-input">
             <label>Email address</label>
@@ -94,6 +100,7 @@ const Login = (props) => {
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               onChange={(e) => setLoginEmail(e.target.value)}
+              required
             />
           </div>
           <div className="password-input">
@@ -103,6 +110,7 @@ const Login = (props) => {
               className="form-control"
               id="exampleInputPassword1"
               onChange={(e) => setLoginPassword(e.target.value)}
+              required
             />
           </div>
         </div>
