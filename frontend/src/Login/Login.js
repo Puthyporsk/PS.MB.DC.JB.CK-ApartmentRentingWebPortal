@@ -7,12 +7,17 @@ import "./Login.css";
 import Logo from "./logo.png";
 
 const Login = (props) => {
+
+  const [logInErr, setLogInErr] = useState(false);
+  const [logInErrMsg, setlogInErrMsg] = useState("");
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  const [signupUserType, setSignupUserType] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [signupName, setSignupName] = useState("");
@@ -43,6 +48,8 @@ const Login = (props) => {
       props.getUserInfo(responseData.user);
       setLoggedIn(true);
     } catch (err) {
+      setLogInErr(true);
+      setlogInErrMsg(err.message);
       console.log(err.message || "Something went wrong, please try again");
     }
   };
@@ -50,6 +57,7 @@ const Login = (props) => {
   const handleSignup = async () => {
     console.log(signupEmail);
     console.log(signupPassword);
+    console.log(signupUserType);
 
     try {
       const response = await fetch("http://localhost:5000/api/users/signup", {
@@ -61,6 +69,7 @@ const Login = (props) => {
           name: signupName,
           email: signupEmail,
           password: signupPassword,
+          type: signupUserType,
         }),
       });
 
@@ -73,6 +82,8 @@ const Login = (props) => {
       props.getUserInfo(responseData.user);
       setLoggedIn(true);
     } catch (err) {
+      setLogInErr(true);
+      setlogInErrMsg(err.message);
       console.log(err.message || "Something went wrong, please try again");
     }
   };
@@ -85,6 +96,7 @@ const Login = (props) => {
       </div>
 
       <form>
+      {logInErr ? <p style={{textAlign: "center", backgroundColor: 'lightcoral'}}>{logInErrMsg}</p>: null}
         <div className="input-wrapper">
           <div className="email-input">
             <label>Email address</label>
@@ -137,6 +149,19 @@ const Login = (props) => {
         </Modal.Header>
         <Modal.Body>
           <div className="input-wrapper">
+            <div className="userType-input">
+              <label>Type:&nbsp;</label>
+              <select                 
+                type="userType"
+                className="form-control"
+                id="exampleSelectType1"
+                aria-describedby="userTypeHelp"
+                onChange={(e) => setSignupUserType(e.target.value)}>
+                <option></option>
+                <option value="Tenant">Tenant</option>
+                <option value="Owner">Owner</option>
+              </select>
+            </div>
             <div className="name-input">
               <label>Name</label>
               <input

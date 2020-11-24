@@ -44,3 +44,31 @@ ul {
 .signin-signout-button {
   margin-left: 80%;
 }
+
+/* Style the floating action button, which is fixed in the lower right of the app */
+.floatbtn {
+  position:fixed;
+  cursor: pointer;
+  width:150px;
+  height:30px;
+  bottom:60px;
+  right:40px;
+  background-color:#13294E;
+  color:white;
+  border-radius:50px;
+  text-align:center;
+  box-shadow: 2px 2px 3px #999;
+  }
+
+  .floatbtn-icon {
+    padding: 20px;
+  }
+  
+  .floatbtn a:visited {
+  color: white !important;
+  }
+  
+  .floatbtn a:active {
+  color: white !important;
+  }
+  

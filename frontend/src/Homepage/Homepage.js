@@ -10,6 +10,7 @@ import {
   Container,
   Row,
   Col,
+  Modal,
 } from "react-bootstrap";
 import "./Homepage.css";
 
@@ -21,8 +22,31 @@ const Homepage = (props) => {
   const [selectedApartment, setSelectedApartment] = useState();
   const [isSelected, setIsSelected] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [addApartmentClicked, setAddApartmentClicked] = useState(false);
 
   const [apartments, setApartments] = useState([]);
+
+  const [mainImageInput, setMainImageInput] = useState("");
+  const [priceInput, setPriceInput] = useState(0);
+  const [cityInput, setCityInput] = useState("");
+  const [sqftInput, setSqftInput] = useState(0);
+  const [bedAmountInput, setBedAmountInput] = useState(0);
+  const [bathAmountInput, setBathAmountInput] = useState(0);
+  const [otherImagesInput, setOtherImagesInput] = useState("");
+  const [evenMorePictures, setEvenMorePictures] = useState([]);
+
+  // let counter= 1;
+
+
+  const [newApartments, setNewApartments] = useState({
+    mainImage: "",
+    price: 0,
+    city: "",
+    sqft: 0,
+    bedAmount: 0,
+    bathAmount: 0,
+    otherImages: []
+  });
 
   useEffect(() => {
     console.log(props.userInfo);
@@ -71,6 +95,27 @@ const Homepage = (props) => {
     console.log("In login redirect");
     setLogout(true);
   };
+
+  const handleAddApartment = async (e, data) =>{
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/apartments/addApartment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      console.log(responseData);
+    } catch (err) {
+      console.log(err.message || "Something went wrong, please try again");
+    }
+  }
 
   return (
     <React.Fragment>
@@ -169,6 +214,62 @@ const Homepage = (props) => {
           </Col>
         </Row>
       </Container>
+      {isLoggedIn && props.userInfo.type === "Owner" ?
+          <div className="floatbtn" onClick={() => setAddApartmentClicked(true)}><span className="floatbtn-icon">Add Apartment</span></div>   : null}
+      {addApartmentClicked ? 
+        <Modal
+          show={true}
+          onHide={() => setAddApartmentClicked(false)}
+        >
+          <Modal.Title>
+            Adding Apartment
+          </Modal.Title>
+          <Modal.Body>
+            <form onSubmit={(e)=> handleAddApartment(e, newApartments)}>
+              <label>Main Image:&nbsp;</label>
+              <input onChange={(e) => setMainImageInput(e.target.value)}></input>
+              <p></p>
+              <label>Price:&nbsp;</label>
+              <input onChange={(e) => setPriceInput(e.target.value)}></input>
+              <p></p>
+              <label>City:&nbsp;</label>
+              <input onChange={(e) => setCityInput(e.target.value)}></input>
+              <p></p>
+              <label>Sq Ft:&nbsp;</label>
+              <input onChange={(e) => setSqftInput(e.target.value)}></input>
+              <p></p>
+              <label>Bed Amount:&nbsp;</label>
+              <input onChange={(e) => setBedAmountInput(e.target.value)}></input>
+              <p></p>
+              <label>Bath Amount:&nbsp;</label>
+              <input onChange={(e) => setBathAmountInput(e.target.value)}></input>
+              <p></p>
+              <label>Other Images:&nbsp;</label>
+              <input onChange={(event) => {setOtherImagesInput(event.target.value); evenMorePictures.push(otherImagesInput)}}></input>
+              <p></p>
+              <button onClick={() => setNewApartments({
+                  mainImage: mainImageInput,
+                  price: priceInput,
+                  city: cityInput,
+                  sqft: sqftInput,
+                  bedAmount: bedAmountInput,
+                  bathAmount: bathAmountInput,
+                  otherImages: [...newApartments.otherImages, otherImagesInput]
+            })}>Submit</button>
+              {/* <button onClick={(e) => { e.preventDefault();
+                setEvenMorePictures((
+                  <input onChange={(e) => otherImagesInput.push(e.target.value)}></input>
+                ))
+              }}>Add More Images&nbsp;</button>
+              <p></p> */}
+              {/* {evenMorePictures} */}
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+
+          </Modal.Footer>
+        </Modal>
+      : null}
     </React.Fragment>
   );
 };
