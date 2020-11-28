@@ -33,9 +33,9 @@ const Homepage = (props) => {
   const [bedAmountInput, setBedAmountInput] = useState(0);
   const [bathAmountInput, setBathAmountInput] = useState(0);
   const [otherImagesInput, setOtherImagesInput] = useState("");
-  const [evenMorePictures, setEvenMorePictures] = useState([]);
-
-  // let counter= 1;
+  const [morePictures, setMorePictures] = useState([]);
+  const [evenMorePictures, setEvenMorePictures] = useState("");
+  const [counter, setCounter] = useState([]);
 
 
   const [newApartments, setNewApartments] = useState({
@@ -98,6 +98,9 @@ const Homepage = (props) => {
 
   const handleAddApartment = async (e, data) =>{
     e.preventDefault();
+    setAddApartmentClicked(false);
+    {console.log(newApartments)}
+
     try {
       const response = await fetch("http://localhost:5000/api/apartments/addApartment", {
         method: "POST",
@@ -115,6 +118,20 @@ const Homepage = (props) => {
     } catch (err) {
       console.log(err.message || "Something went wrong, please try again");
     }
+  }
+
+  const handleSubmitClicked = () =>{
+    counter.map(i => morePictures.push(document.getElementById(i).value));
+    morePictures.push(otherImagesInput);
+    setNewApartments({
+          mainImage: mainImageInput,
+          price: priceInput,
+          city: cityInput,
+          sqft: sqftInput,
+          bedAmount: bedAmountInput,
+          bathAmount: bathAmountInput,
+          otherImages: morePictures
+    });
   }
 
   return (
@@ -214,6 +231,7 @@ const Homepage = (props) => {
           </Col>
         </Row>
       </Container>
+
       {isLoggedIn && props.userInfo.type === "Owner" ?
           <div className="floatbtn" onClick={() => setAddApartmentClicked(true)}><span className="floatbtn-icon">Add Apartment</span></div>   : null}
       {addApartmentClicked ? 
@@ -221,11 +239,15 @@ const Homepage = (props) => {
           show={true}
           onHide={() => setAddApartmentClicked(false)}
         >
+          <Modal.Header closeButton>
           <Modal.Title>
             Adding Apartment
           </Modal.Title>
+          </Modal.Header>
           <Modal.Body>
-            <form onSubmit={(e)=> handleAddApartment(e, newApartments)}>
+            <form onSubmit={(e)=> {
+              handleAddApartment(e, newApartments);
+            }}>
               <label>Main Image:&nbsp;</label>
               <input onChange={(e) => setMainImageInput(e.target.value)}></input>
               <p></p>
@@ -245,24 +267,17 @@ const Homepage = (props) => {
               <input onChange={(e) => setBathAmountInput(e.target.value)}></input>
               <p></p>
               <label>Other Images:&nbsp;</label>
-              <input onChange={(event) => {setOtherImagesInput(event.target.value); evenMorePictures.push(otherImagesInput)}}></input>
+              <input onChange={(event) => setOtherImagesInput(event.target.value)}></input>
               <p></p>
-              <button onClick={() => setNewApartments({
-                  mainImage: mainImageInput,
-                  price: priceInput,
-                  city: cityInput,
-                  sqft: sqftInput,
-                  bedAmount: bedAmountInput,
-                  bathAmount: bathAmountInput,
-                  otherImages: [...newApartments.otherImages, otherImagesInput]
-            })}>Submit</button>
-              {/* <button onClick={(e) => { e.preventDefault();
-                setEvenMorePictures((
-                  <input onChange={(e) => otherImagesInput.push(e.target.value)}></input>
-                ))
-              }}>Add More Images&nbsp;</button>
-              <p></p> */}
-              {/* {evenMorePictures} */}
+              <button type="button" onClick={() => {setCounter([...counter, counter.length+1])}}>Add More Images&nbsp;</button>
+              {counter}
+              {counter.map(x => (<p>    
+                <input id={x} onChange={(event) => setEvenMorePictures(event.target.value)}></input>
+              </p>))}
+              <p></p>
+              <button onClick={() => {
+                handleSubmitClicked()
+              }}>Submit</button>
             </form>
           </Modal.Body>
           <Modal.Footer>
