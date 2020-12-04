@@ -28,7 +28,7 @@ const App = () => {
           <Route path="/homepage" exact>
             <Homepage userInfo={userInfo} />
           </Route>
-          <Redirect to="/homepage" />
+          <Redirect to="/login" />
         </Switch>
       </Router>
     </div>

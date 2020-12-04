@@ -1,8 +1,9 @@
-import Reach from "react";
-import {create} from "react-test-renderer";
+import React from "react";
+import { create } from "react-test-renderer";
+import { act } from "react-test-renderer";
 
 import { unmountComponentAtNode } from "react-dom";
-const login = require('./Login');
+const Login = require("./Login");
 
 let container = null;
 beforeEach(() => {
@@ -11,28 +12,26 @@ beforeEach(() => {
   document.body.appendChild(container);
 });
 
-
 act(() => {
-    const getUserInfo = (userInfo) => {
-        console.log(userInfo);
-        setUserInfo(userInfo);
-      };
+  const getUserInfo = (userInfo) => {
+    console.log(userInfo);
+    setUserInfo(userInfo);
+  };
 
-      <Login getUserInfo/>
+  <Login getUserInfo />;
 });
 
-//if no props are passed into our login React component then we'll see this error displayed as the text 
+//if no props are passed into our login React component then we'll see this error displayed as the text
 expect(container.textContent).toBe("Something went wrong, please try again");
 
 act(() => {
-    const getUserInfo = (userInfo) => {
-        console.log(userInfo);
-        setUserInfo(userInfo);
-      };
+  const getUserInfo = (userInfo) => {
+    console.log(userInfo);
+    setUserInfo(userInfo);
+  };
 
-      <Login getUserInfo={getUserInfo}/>
+  <Login getUserInfo={getUserInfo} />;
 });
-
 
 expect(container.Login);
 

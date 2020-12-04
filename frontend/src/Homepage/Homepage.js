@@ -27,8 +27,6 @@ const Homepage = (props) => {
 
   const [apartments, setApartments] = useState([]);
 
-
-
   useEffect(() => {
     console.log(props.userInfo);
     if (props.userInfo != null) {
@@ -160,13 +158,7 @@ const Homepage = (props) => {
                 <div key={apartment._id}>
                   <ApartmentThumbnail
                     expandInfo={expandInfo}
-                    id={apartment._id}
-                    image={apartment.mainImage}
-                    price={apartment.price}
-                    bathAmount={apartment.bathAmount}
-                    bedAmount={apartment.bedAmount}
-                    city={apartment.city}
-                    sqft={apartment.sqft}
+                    apartmentInfo={apartment}
                   />
                 </div>
               ))}
@@ -175,11 +167,14 @@ const Homepage = (props) => {
         </Row>
       </Container>
 
-      {isLoggedIn && props.userInfo.type === "Owner" ?
-          <div className="floatbtn" onClick={() => setAddApartmentClicked(true)}><span className="floatbtn-icon">Add Apartment</span></div>   : null}
-      {addApartmentClicked ? 
+      {isLoggedIn && props.userInfo.type === "Owner" ? (
+        <div className="floatbtn" onClick={() => setAddApartmentClicked(true)}>
+          <span className="floatbtn-icon">Add Apartment</span>
+        </div>
+      ) : null}
+      {addApartmentClicked ? (
         <AddApartmentDialogue close={() => setAddApartmentClicked(false)} />
-      : null}
+      ) : null}
     </React.Fragment>
   );
 };
