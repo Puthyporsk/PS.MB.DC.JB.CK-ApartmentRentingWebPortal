@@ -153,7 +153,7 @@ describe("Testing userController login", () => {
         const next = jest.fn();
         const output = await spy(req, res, next);
         const error = new Error(
-            "Invalid login credentials, please try again"
+            "Password is incorrect, please try again."
           );
         expect(next).toHaveBeenCalledWith(error);
     });
