@@ -1,0 +1,23 @@
+.modal-90w {
+  width: 70%;
+  max-width: 70% !important;
+}
+
+.image {
+  float: left;
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  margin-top: 25px;
+  margin-left: 100px;
+  margin-bottom: 50px;
+}
+
+.button {
+  text-align: center;
+  margin-left: 50px;
+}
+
+.modal-title {
+  text-align: center;
+}

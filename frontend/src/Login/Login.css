@@ -1,0 +1,101 @@
+/* Large Screen (Desktop) */
+@media only screen and (min-device-width: 813px) and (max-device-width: 2000px) {
+  form {
+    margin-top: 75px;
+  }
+
+  .input-wrapper {
+    padding: 10px 35px;
+    margin-left: 20%;
+    box-sizing: border-box;
+    width: 60%;
+  }
+
+  .login-button {
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .signup-button {
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .password-input {
+    margin-top: 35px;
+  }
+
+  .sign-up-text {
+    font-size: small;
+  }
+
+  .logo {
+    margin-top: 25px;
+    margin-left: 42%;
+    margin-bottom: -30px;
+  }
+
+  /* Modal css that will be put into a new component later */
+  .modal-footer {
+    text-align: center;
+  }
+
+  .modal-close-button {
+    margin-right: 100px;
+  }
+
+  .modal-submit-button {
+    margin-right: 100px;
+  }
+}
+
+/* Small Screen (iPhone X) */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+  form {
+    margin-top: 75px;
+  }
+
+  .input-wrapper {
+    padding: 10px 35px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+  .login-button {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .signup-button {
+    margin-top: 10%;
+    text-align: center;
+  }
+
+  .password-input {
+    margin-top: 35px;
+  }
+
+  .sign-up-text {
+    font-size: small;
+  }
+
+  .logo {
+    margin-top: 25px;
+    margin-left: 75px;
+    margin-bottom: -30px;
+    width: 60%;
+  }
+
+  /* Modal css that will be put into a new component later */
+  .modal-footer {
+    text-align: center;
+  }
+
+  .modal-close-button {
+    margin-right: 75px;
+  }
+
+  .modal-submit-button {
+    margin-right: 50px;
+  }
+}
